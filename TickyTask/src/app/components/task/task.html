@@ -1,0 +1,51 @@
+<div class="task-card" [class.completed]="task.completed">
+    <div class="task-content">
+        <!-- Modo visualización -->
+        @if (!isEditing) {
+            <div class="view-mode">
+                <div class="task-header">
+                    <input
+                    type="checkbox"
+                    [checked]="task.completed"
+                    (change)="onToggle()"
+                    class="task-checkbox"
+                    aria-label="Marcar como completada"
+                    >
+                    <span class="task-description">{{ task.description }}</span>
+                </div>
+                <div class="task-actions">
+                    <button (click)="startEditing()" class="btn edit-btn">
+                    <i class="material-icons">edit</i>
+                    </button>
+                    
+                    <button (click)="onDelete()" class="btn delete-btn">
+                    <i class="material-icons">delete</i>
+                    </button>
+                </div>
+            </div>
+        }
+
+        <!-- Modo edición -->
+        @if (isEditing) {
+            <div class="edit-mode">
+                <input
+                    type="text"
+                    [(ngModel)]="editedDescription"
+                    class="edit-input"
+                    (keyup.enter)="saveEdit()"
+                    (keyup.escape)="cancelEdit()"
+                    autofocus
+                >
+                
+                <div class="edit-actions">
+                    <button (click)="saveEdit()" class="btn save-btn" [disabled]="!editedDescription.trim()">
+                    <i class="material-icons">save</i>
+                    </button>
+
+                    <button (click)="cancelEdit()" class="btn cancel-btn">
+                    <i class="material-icons">cancel</i>
+                    </button>
+                </div>
+            </div>}
+    </div>
+</div>

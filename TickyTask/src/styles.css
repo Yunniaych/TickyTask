@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'material-icons/iconfont/material-icons.css';
+
+body {
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    background-color: #dad7cd;
+}
+
+.title {
+    text-align: center;
+    color: #344e41;
+    font-weight: bold;
+    font-size: 2.5rem;
+    margin-top: 2rem;
+   font-family: 'Franklin Gothic Medium', sans-serif;
+}
+

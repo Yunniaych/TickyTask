@@ -1,0 +1,74 @@
+<div class="task-list-container">  
+    <!-- Para crear nuevo task o to-do -->
+    @if (showTaskForm) {
+        <div class="add-task-form">
+            <input
+                id="new-task-input"
+                type="text"
+                [(ngModel)]="newTaskDescription"
+                (keyup.enter)="addTask()"
+                (keyup.escape)="cancelAddTask()"
+                placeholder="Enter task description..."
+                class="task-input"
+            >
+            <div class="form-actions">
+                <button (click)="addTask()" [disabled]="!newTaskDescription.trim()" class="save-btn">
+                    Save
+                </button>
+                <button (click)="cancelAddTask()" class="cancel-btn">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    }
+
+    <div class="action-bar">
+        <!-- Filtros -->
+        <div class="filters">
+            <button 
+            [class.active]="(filter$ | async) === 'all'"
+            (click)="changeFilter('all')">
+                All
+            </button>
+            <button 
+            [class.active]="(filter$ | async) === 'pending'"
+            (click)="changeFilter('pending')">
+                Pending
+            </button>
+            <button 
+            [class.active]="(filter$ | async) === 'completed'"
+            (click)="changeFilter('completed')">
+                Completed
+            </button>
+        </div>
+        <!-- Boton para mostrar formulario de nueva tarea -->
+        @if (!showTaskForm) {
+            <button 
+            (click)="toggleTaskForm()" 
+            class="add-task-button">
+                + Add New Task
+            </button>   
+        } 
+    </div>
+
+    <!-- Lista de tasks -->
+    <div class="tasks-container">
+        <!-- Verificar si hay tareas -->
+        @if ((tasks$ | async)?.length === 0) {
+            <div class="empty-state">
+                No tasks found
+            </div>
+        }
+        @else { 
+            @for (task of (tasks$ | async); track task.id) {
+                <!-- componente task -->
+                <app-task
+                [task]="task"
+                (toggle)="handleTaskToggle($event)"
+                (delete)="handleTaskDelete($event.id)"
+                (edit)="handleTaskEdit($event)"
+                ></app-task>
+            }   
+        }
+    </div>
+</div>
